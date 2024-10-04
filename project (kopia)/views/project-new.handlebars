@@ -1,0 +1,44 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add new project</title>
+  </head>
+  <body>
+    {{#if project.pid}}
+      <h1>Edit project</h1>
+    {{else}}
+      <h1>New project</h1>
+    {{/if}}
+
+    <div class="project-form">
+    {{#if project.pid}}
+        <form action="/project/modify/{{project.pid}}" method="POST">
+    {{else}}
+        <form action="/project/add/new" method="POST">
+    {{/if}}
+        <input
+          type="text"
+          name="projtitle"
+          id="projtitle"
+          placeholder="Project Title"
+        {{#if project.ptitle}} value="{{project.ptitle}}"{{/if}}
+        />
+        <input type="text" name="projyear" id="projyear" placeholder="Year" {{#if project.pyear}} value="{{project.pyear}}"{{/if}}/>
+        <select type="text" name="projtype" id="projtype" placeholder="Type">
+          <option value="Illustration" {{#if (eq project.ptype "Illustration")}}selected="selected"{{/if}}>Illustration</option>
+          <option value="Photography"{{#if (eq project.ptype "Photography")}}selected="selected"{{/if}}>Photography</option>
+          <option value="Programming"{{#if (eq project.ptype "Programming")}}selected="selected"{{/if}}>Programming</option>
+        </select>
+        <input
+          type="text"
+          name="projurl"
+          id="projurl"
+          placeholder="/img/xxx.png"
+          {{#if project.purl}} value="{{project.purl}}"{{/if}}
+        />
+        <input type="submit" value={{#if project.pid}}"edit project" {{else}} "Add new project" {{/if}}/>
+      </form>
+    </div>
+  </body>
+</html>

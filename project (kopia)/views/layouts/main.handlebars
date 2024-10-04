@@ -1,0 +1,56 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script src="/script.js" defer></script>
+    <title>Emma's Portfolio</title>
+  </head>
+
+  <header>
+    <div class="off-screen-menu">
+      <ul class="navbar">
+        <li><a href="/">HOME</a></li>
+        <li><a href="/projects">PROJECTS</a></li>
+        <li><a href="/skills">SKILLS</a></li>
+        <li><a href="/about">ABOUT</a></li>
+        <li><a href="/contact">CONTACT</a></li>
+        {{#if session.isLoggedIn}}
+          <li><a href="/logout">LOGOUT</a></li>
+        {{else}}
+          <li id="menulogin"> <a href="/login">LOGIN</a></li>
+        {{/if}}
+      </ul>
+    </div>
+
+    <nav>
+
+      <span>
+        {{#if session.isLoggedIn}}
+          <h1>
+            <a href="/profile">
+              <img
+                id="profile-img"
+                width="50"
+                height="50"
+                src="https://img.icons8.com/?size=100&id=77883&format=png&color=720606"
+                alt="user-male-circle"
+              />
+            </a>
+
+          </h1>
+        {{/if}}
+      </span>
+
+      <div class="ham-menu">
+        <span id="s1"></span>
+        <span id="s2"></span>
+        <span id="s3"></span>
+      </div>
+    </nav>
+  </header>
+  <body>
+    {{{body}}}
+  </body>
+</html>

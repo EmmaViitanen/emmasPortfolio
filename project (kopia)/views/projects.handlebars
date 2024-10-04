@@ -1,0 +1,37 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects</title>
+  </head>
+  <body>
+    <h1 id="proj-header">projects</h1>
+    {{#if session.isAdmin}}
+      <p><a href="/project/add/new">ADD NEW PROJECT</a></p>
+    {{/if}}
+    <div class="project-container">
+      {{! make a grid}}
+      {{#each projects}}
+        <div class="object">
+
+          <a href="/project/{{pid}}"><img
+              src="{{purl}}"
+              alt="{{purl}}"
+              class="proj-img"
+            /></a>
+          <h3 id="pname">{{ptitle}}</h3>
+          <p id="ptype">{{ptype}}</p>
+          {{#if ../session.isAdmin}}
+          <a href="/project/modify/{{pid}}" class="modify">MODIFY</a>
+          <a href="/project/delete/{{pid}}" class="modify">DELETE</a>
+          {{/if}}
+        </div>
+      {{/each}}
+
+
+    </div>
+    {{!-- {{#if page}}
+    <a href='/projects?page={{page + 1}}'>Next</a>
+    {{/if}} --}}
+  </body>
+</html>

@@ -1,0 +1,312 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+:root {
+  --white: #f1e6d2;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* ---------
+GENERAL CSS
+---------- */
+body {
+  background-color: white;
+  z-index: 1;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 3rem;
+  color: #891d1a;
+}
+
+h2,
+h3 {
+  text-align: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: #891d1a;
+}
+
+/* ---------------
+MAIN HANDLEBARS
+--------------- */
+.menu {
+  display: flex;
+  justify-content: space-around;
+}
+
+.menu .navbar-comp li a {
+  padding: 20px;
+}
+
+nav {
+  list-style: none;
+  text-decoration: none;
+  border: none;
+}
+
+.off-screen-menu {
+  z-index: 1;
+  background-color: rgb(114, 6, 6);
+  height: 100vh;
+  width: 100%;
+  max-width: 450px;
+  position: fixed;
+  top: 0;
+  right: -450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  transition: 0.3s ease;
+}
+
+.off-screen-menu.active {
+  right: 0;
+}
+
+nav,
+h1 a {
+  padding: 1rem;
+  display: flex;
+  color: rgb(114, 6, 6);
+  text-decoration: none;
+  justify-content: space-between;
+}
+
+nav h1 {
+  padding: 0 5px 0 5px;
+}
+
+.navbar li {
+  list-style-type: none;
+  margin-bottom: 1rem;
+}
+
+.navbar li a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+}
+.navbar li a:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ham-menu {
+  height: 50px;
+  width: 40px;
+  margin-left: auto;
+  position: relative;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.ham-menu span {
+  height: 5px;
+  width: 100%;
+  background-color: rgb(114, 6, 6);
+  border-radius: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.3s ease;
+}
+
+.ham-menu #s1 {
+  top: 25%;
+}
+
+.ham-menu #s3 {
+  top: 75%;
+}
+
+.ham-menu.active #s1 {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background-color: rgb(255, 255, 255);
+}
+
+.ham-menu.active #s2 {
+  opacity: 0;
+}
+
+.ham-menu.active #s3 {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  background-color: rgb(255, 255, 255);
+}
+
+/* ---------------
+HOME HANDLEBARS
+--------------- */
+.home-container {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
+#homepage {
+  display: block;
+  position: relative;
+  font-size: 6rem;
+  text-align: center;
+  font-style: italic;
+  top: 25vh;
+}
+
+/* --------------
+ABOUT HANDLEBARS
+-------------- */
+.about-con {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 5rem;
+  margin: 2rem 5rem;
+  justify-content: center;
+}
+
+.me-img img {
+  width: 20rem;
+  height: auto;
+}
+
+.about-con span p {
+  padding-bottom: 1rem;
+  width: 100%;
+  max-width: 60rem;
+  flex-wrap: wrap;
+  text-align: justify;
+}
+
+/* ---------------
+CONTACT HANDLEBARS
+--------------- */
+.con-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}
+
+.con-form input {
+  border: none;
+  border-bottom: 1px solid rgb(114, 6, 6);
+  padding: 20px;
+  outline: none;
+}
+
+#full-name,
+#message {
+  width: 30rem;
+}
+
+#phone,
+#email {
+  width: 15rem;
+}
+
+#cont-btn {
+  width: 10rem;
+  height: 3rem;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+/* ---------------
+LOGIN HANDLEBARS
+--------------- */
+.form {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form h1 {
+  margin: 50px 0;
+  color: rgb(114, 6, 6);
+}
+
+.form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+#username,
+#password {
+  height: 50px;
+  width: 20rem;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  border: 1px solid rgb(114, 6, 6);
+  border-radius: 25px;
+  background: transparent;
+  outline: none;
+}
+
+#username:focus,
+#password:focus {
+  transition: 0.5s ease;
+  background-color: white;
+}
+
+#loginBtn {
+  border-radius: 5px;
+  margin-bottom: 100px;
+  height: 50px;
+  width: 10rem;
+  background-color: rgb(171, 92, 92);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+/* ---------------
+PROJECTS HANDLEBARS
+--------------- */
+.project-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 5rem;
+  row-gap: 5rem;
+  margin: 10rem;
+}
+
+.proj-img {
+  width: 100%;
+  display: inline-block;
+}
+
+.object {
+  text-align: center;
+}
+
+#pid-img {
+  width: 50%;
+  height: auto;
+}
+
+/* ---------------
+SKILLS  HANDLEBARS
+--------------- */
+
+/* ---------------
+PROFILE  HANDLEBARS
+--------------- */

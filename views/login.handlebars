@@ -1,0 +1,25 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="form">
+      <h1>Login</h1>
+      <form action="/login" method="post">
+        <input type="text" name="username" class="loginInput" placeholder="Username" />
+        <input type="password" name="password" class="loginInput" placeholder="Password" />
+        <button id="loginBtn" type="submit">Login</button>
+        <p>or</p>
+        <a class="red-button" href="/add-user">Register</a>
+      </form>
+      {{#if error}}
+        <h1 class="error">{{error}}</h1>
+      {{/if}}
+      {{#if message}}
+        <h1 class="error">{{message}}</h1>
+      {{/if}}
+    </div>
+  </body>
+</html>

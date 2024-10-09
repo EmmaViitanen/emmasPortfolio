@@ -1,0 +1,21 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+  </head>
+  <body>
+
+    <h1>Edit user</h1>
+
+    <div class="form">
+      <form action="/user/modify/{{user.uid}}" method="POST">
+        <input type="text" name="userId" class="loginInput" id="userId" value="{{user.userid}}" />
+        <input type="text" name="umail" class="loginInput" id="umail" value="{{user.umail}}" />
+        <input type="text" name="uname" class="loginInput" id="uname" value="{{user.uname}}" />
+        <input type="text" name="upassword" class="loginInput" id="upassword" value="{{user.upassword}}" />
+        <input type="submit" class="ed-button" value="EDIT USER" />
+      </form>
+    </div>
+  </body>
+</html>

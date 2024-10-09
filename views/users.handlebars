@@ -1,0 +1,32 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+  </head>
+  <body>
+    <div class="container-centered">
+      <table class="users">
+        <tr id="tableHead">
+          <th>ID</th>
+          <th>EMAIL</th>
+          <th>USERNAME</th>
+          <th>PASSWORD</th>
+          <th>EDIT</th>
+        </tr>
+        {{#each users}}
+          <tr>
+            <th>{{uid}}</th>
+            <th>{{umail}}</th>
+            <th>{{uname}}</th>
+            <th>{{upassword}}</th>
+            <th>
+              <a href="/user/modify/{{uid}}" class="red-button">MODIFY</a>
+              <a href="/user/delete/{{uid}}" class="red-button">DELETE</a>
+            </th>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+  </body>
+</html>

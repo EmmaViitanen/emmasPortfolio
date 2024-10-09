@@ -1,0 +1,32 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="home-container">
+      <a href="/about" class="homeText"><div>
+          <h1 id="homepage">graphic designer <br /> UX/UI designer</h1>
+          <section>
+            <h4>My name is Emma Viitanen, and I am currently a student</h4>
+
+            <h4>at Jönköping School of Engineering. This is my second</h4>
+            <h4>year studying graphic design and web development</h4>
+            <h4>and this is my web-based portfolio.</h4>
+          </section>
+        </div></a>
+      <img id="homeImg" src="/img/smile.JPG" alt="Image of me" />
+    </div>
+
+    {{#each projskills}}
+      {{@key}}
+      <ul>
+        {{#each this}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    {{/each}}
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>projects</title>
+  </head>
+  <body>
+    <h1 id="project-info">{{project.ptitle}}</h1>
+    <h3>{{project.pyear}}</h3>
+
+    <h4>{{project.ptype}} {{skills}}</h4>
+    <div class="projDisplay">
+      <img src="{{project.purl}}" alt="{{project.purl}}" id="pid-img" />
+      {{#if session.isLoggedIn}}
+        <from action="/project:{{pid}}" method="post" id="comments">
+          <input type="text" name="comment" id="comment" placeholder="Write a comment" /></from>
+      {{/if}}
+    </div>
+
+  </body>
+</html>

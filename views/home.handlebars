@@ -8,7 +8,7 @@
   <body>
     <div class="home-container">
       <a href="/about" class="homeText"><div>
-          <h1 id="homepage">graphic designer <br /> UX/UI designer</h1>
+          <h1 class="homepage">graphic designer <br /> UX/UI designer</h1>
           <section>
             <h4>My name is Emma Viitanen, and I am currently a student</h4>
 
@@ -17,16 +17,7 @@
             <h4>and this is my web-based portfolio.</h4>
           </section>
         </div></a>
-      <img id="homeImg" src="/img/smile.JPG" alt="Image of me" />
+      <img class="homeImg" src="/img/smile.JPG" alt="Image of me" />
     </div>
-
-    {{#each projskills}}
-      {{@key}}
-      <ul>
-        {{#each this}}
-          <li>{{this}}</li>
-        {{/each}}
-      </ul>
-    {{/each}}
   </body>
 </html>

@@ -155,7 +155,7 @@ a {
   justify-content: center;
 }
 
-#homepage {
+.homepage {
   display: block;
   font-size: 2rem;
   text-align: center;
@@ -171,45 +171,15 @@ section h4 {
   color: #000;
 }
 
-#homeImg {
+.homeImg {
   width: 23rem;
   border-radius: 160px 160px 0 0;
 }
 
 /* ! ABOUT HANDLEBARS ! */
-.about-con {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 5rem;
-  margin: 2rem 5rem;
-  justify-content: center;
-}
 
-.me-img img {
-  width: 20rem;
-  height: auto;
-}
-
-.about-con span p {
-  padding-bottom: 1rem;
-  width: 100%;
-  max-width: 60rem;
-  flex-wrap: wrap;
-  text-align: justify;
-}
-
-.socialMedia li a {
-  display: flex;
-
-  align-items: center;
-  justify-content: space-around;
-}
-.socialMedia img {
-  width: 2.5rem;
-}
-
-#insta {
-  width: 3.3rem;
+#aboutSection {
+  width: 30rem;
 }
 
 /* ! CONTACT HANDLEBARS ! */

@@ -283,7 +283,6 @@ app.post("/login", (req, res) => {
           console.log("session information: " + JSON.stringify(req.session));
 
           res.redirect("/profile");
-          console.log("ÖHHHHHH");
         } else {
           const model = {
             error: "Sorry, the password is not correct...",
@@ -369,7 +368,7 @@ app.get("/user/delete/:userid", function (req, res) {
   });
 });
 app.get("/user/modify/:projid", function (req, res) {
-  const id = req.params.userid;
+  const id = req.params.uid;
   db.get("SELECT * FROM users WHERE uid=?", [id], (error, theUser) => {
     if (error) {
       console.log("ERROR: ", error);
@@ -384,8 +383,7 @@ app.post("/user/modify/:projid", function (req, res) {
   const id = req.params.userid;
   const email = req.body.useremail;
   const name = req.body.username;
-  const password = req.body.userpassword;
-  db.run(`UPDATE users SET umail=?, uname=?, upassword=?`, [email, name, password, id], (error) => {
+  db.run(`UPDATE users SET umail=?, uname=?, upassword=? WHERE uid=?`, [email, name, id], (error) => {
     if (error) {
       console.log("ERROR: ", error);
       res.redirect("/users");
@@ -611,7 +609,6 @@ function initTableSkills(mydb) {
 }
 
 function initTableUsers(mydb) {
-  //   const users = [];
   db.serialize(() => {
     db.run(
       "CREATE TABLE IF NOT EXISTS users (uid INTEGER PRIMARY KEY AUTOINCREMENT, umail TEXT NOT NULL, uname TEXT NOT NULL, upassword TEXT NOT NULL)",

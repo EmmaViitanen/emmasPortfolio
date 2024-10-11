@@ -11,11 +11,8 @@
     <h4>{{project.ptype}} {{skills}}</h4>
     <div class="projDisplay">
       <img src="{{project.purl}}" alt="{{project.purl}}" id="pid-img" />
-      {{#if session.isLoggedIn}}
-        <from action="/project:{{pid}}" method="post" id="comments">
-          <input type="text" name="comment" id="comment" placeholder="Write a comment" /></from>
-      {{/if}}
     </div>
+    {{project.pdesc}}
 
   </body>
 </html>

@@ -1,62 +1,60 @@
-<header>
-  <!-- HIDDEN HAMBURGER MENU -->
-  <div class="off-screen-menu">
-    <ul class="navbar">
-      <li><a href="/">HOME</a></li>
-      <li><a href="/about">ABOUT ME</a></li>
-      <li><a href="/contact">CONTACT ME</a></li>
-      <li><a href="/projects">PROJECTS</a></li>
+<!-- HIDDEN HAMBURGER MENU -->
+<div class="off-screen-menu">
+  <ul class="navbar">
+    <li><a href="/">HOME</a></li>
+    <li><a href="/about">ABOUT ME</a></li>
+    <li><a href="/contact">CONTACT ME</a></li>
+    <li><a href="/projects">PROJECTS</a></li>
+    {{#if session.isAdmin}}
+      <li><a href="/users">USERS</a></li>
+    {{/if}}
+    {{#if session.isLoggedIn}}
+      <li><a href="/logout">LOGOUT</a></li>
+    {{else}}
+      <li id="menulogin"> <a href="/login">LOGIN</a></li>
+    {{/if}}
+  </ul>
+</div>
+<!-- COMPUTER MENU -->
+<nav>
+  <div class="nav-computer">
+    <ul class="navCol" id="col1">
+      <li class="navBtn"><a href="/">HOME</a></li>
+      <li class="navBtn"><a href="/about">ABOUT ME</a></li>
+      <li class="navBtn"><a href="/contact">CONTACT ME</a></li>
+      <li class="navBtn"><a href="/projects">PROJECTS</a></li>
       {{#if session.isAdmin}}
-        <li><a href="/users">USERS</a></li>
+        <li class="navBtn"><a href="/users">USERS</a></li>
       {{/if}}
+
+    </ul>
+    <ul class="navCol" id="col2">
       {{#if session.isLoggedIn}}
-        <li><a href="/logout">LOGOUT</a></li>
+        <h1>
+          <a href="/profile">
+            <img
+              id="profile-img"
+              width="60"
+              height="60"
+              src="https://img.icons8.com/?size=100&id=77883&format=png&color=720606"
+              alt="user-male-circle"
+            />
+          </a>
+        </h1>
+
+        <li class="logNavBtn"><a href="/logout">LOGOUT</a></li>
+
       {{else}}
-        <li id="menulogin"> <a href="/login">LOGIN</a></li>
+        <li class="logNavBtn"><a id="menulogin" href="/login">LOGIN</a></li>
+
       {{/if}}
     </ul>
   </div>
-  <!-- COMPUTER MENU -->
-  <nav>
-    <div class="nav-computer">
-      <ul class="navCol" id="col1">
-        <li class="navBtn"><a href="/">HOME</a></li>
-        <li class="navBtn"><a href="/about">ABOUT ME</a></li>
-        <li class="navBtn"><a href="/contact">CONTACT ME</a></li>
-        <li class="navBtn"><a href="/projects">PROJECTS</a></li>
-        {{#if session.isAdmin}}
-          <li class="navBtn"><a href="/users">USERS</a></li>
-        {{/if}}
-
-      </ul>
-      <ul class="navCol" id="col2">
-        {{#if session.isLoggedIn}}
-          <h1>
-            <a href="/profile">
-              <img
-                id="profile-img"
-                width="60"
-                height="60"
-                src="https://img.icons8.com/?size=100&id=77883&format=png&color=720606"
-                alt="user-male-circle"
-              />
-            </a>
-          </h1>
-
-          <li class="logNavBtn"><a href="/logout">LOGOUT</a></li>
-
-        {{else}}
-          <li class="logNavBtn"><a id="menulogin" href="/login">LOGIN</a></li>
-
-        {{/if}}
-      </ul>
+  <div class="nav-mobile">
+    <div class="ham-menu">
+      <span id="s1"></span>
+      <span id="s2"></span>
+      <span id="s3"></span>
     </div>
-    <div class="nav-mobile">
-      <div class="ham-menu">
-        <span id="s1"></span>
-        <span id="s2"></span>
-        <span id="s3"></span>
-      </div>
-    </div>
-  </nav>
-</header>
+  </div>
+</nav>

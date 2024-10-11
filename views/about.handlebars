@@ -5,33 +5,41 @@
     <title>About Me</title>
   </head>
   <body>
-    <div class="home-container">
-      <div>
+    <div class="about-container">
+      <section class="aboutSection">
         <h1 class="homepage">emma viitanen</h1>
-        <section id="aboutSection">
-          <h4>I have always loved design and programming and I find it interesting when you combine them.
-          </h4>
-          <h4>Before I started my studies at JTH, I took one semester at Blekinge Tekniska Högskola (BTH), to study Web
-            programming online. I quickly realized that not being on campus was demotivating and made it difficult for
-            me to learn. This lead to me ending my studies at BTH and continued the semester working.</h4>
-          <h4>After keeping an eye out on other programs and schools I came across Jönköping Universtiy and was
-            imidiatly drawn to its viraity of programs and courses. There I found a program that combined my two
-            passions, which lead me to start studying New Media Design.
-          </h4>
+        <h4>I have always loved design and programming and I find it interesting when you combine them.
+        </h4>
+        <h4>Before I started my studies at JTH, I took one semester at Blekinge Tekniska Högskola (BTH), to study Web
+          programming online. I quickly realized that not being on campus was demotivating and made it difficult for me
+          to learn. This lead to me ending my studies at BTH and continued the semester working.</h4>
+        <h4>After keeping an eye out on other programs and schools I came across Jönköping Universtiy and was imidiatly
+          drawn to its viraity of programs and courses. There I found a program that combined my two passions, which
+          lead me to start studying New Media Design.
+        </h4>
+      </section>
+      <img id="aboutImg" src="/img/smile.JPG" alt="Image of me" />
+    </div>
+    <div class="about-container">
 
-          <h2>my skills</h2>
-          {{#each skills}}
-            <li>
-              {{sname}}
-              -
-              {{stype}}
-              -
-
-            </li>
-          {{/each}}
-        </section>
+      <section class="aboutSection">
+        <h2>my skills</h2>
+        {{#each skills}}
+          <li>
+            <h4 id="sname">{{sname}}</h4>
+            {{stype}}
+            -
+            {{sdesc}}
+          </li>
+        {{/each}}
+      </section>
+      <div id="socialMedia">
+        <ul>
+          <li><a href="">LinkedIn</a></li>
+          <li><a href="">Facebook</a></li>
+          <li><a href="">Instagram</a></li>
+        </ul>
       </div>
-      <img class="homeImg" src="/img/smile.JPG" alt="Image of me" />
     </div>
 
     {{!-- <div class="skills">

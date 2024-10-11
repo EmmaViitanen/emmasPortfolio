@@ -135,7 +135,6 @@ INNER JOIN project_skills ON projects.pid = project_skills.pid
 INNER JOIN skills ON project_skills.sid = skills.sid
 GROUP BY projects.pid
 LIMIT ? OFFSET ?;
-
 `,
     [limit, offset],
     (error, listOfProjects) => {
@@ -155,10 +154,9 @@ LIMIT ? OFFSET ?;
     }
   );
 });
-app.get("/project/:projectid", function (req, res) {
-  console.log("Project route parameter projectid: " + JSON.stringify(req.params.projectid));
-  // select in the table with the given id
-  db.get(`SELECT * FROM projects WHERE pid=?`, [req.params.projectid], (error, theProject) => {
+app.get("/project/:projid", function (req, res) {
+  console.log("Project route parameter projectid: " + JSON.stringify(req.params.projid));
+  db.get(`SELECT * FROM projects WHERE pid=?`, [req.params.projid], (error, theProject) => {
     if (error) {
       console.log("ERROR: ", error);
     } else {
@@ -189,17 +187,65 @@ app.post("/project/add/new", function (req, res) {
   const title = req.body.projtitle;
   const year = req.body.projyear;
   const type = req.body.projtype;
+  const description = req.body.projdesc;
   const url = req.body.projurl;
-  db.run("INSERT INTO projects (ptitle, pyear, ptype, purl) VALUES (?, ?, ?, ?)", [title, year, type, url], (error) => {
-    if (error) {
-      console.log("ERROR: ", error);
-      res.redirect("/projects");
-    } else {
-      console.log("Line added into the projects table");
-      res.redirect("/projects");
+  const selectSkill = req.body.projskill;
+
+  db.run(
+    "INSERT INTO projects (ptitle, pyear, ptype, pdesc, purl) VALUES (?, ?, ?, ?, ?)",
+    [title, year, type, description, url],
+    function (error) {
+      if (error) {
+        console.log("ERROR inserting project: ", error);
+        return res.redirect("/projects");
+      }
+
+      db.get(
+        "SELECT pid FROM projects WHERE ptitle=? AND pyear=? AND ptype=? AND pdesc=? AND purl=?",
+        [title, year, type, description, url],
+        function (error, project) {
+          if (error) {
+            console.log("ERROR retrieving project ID: ", error);
+            return res.redirect("/projects");
+          }
+
+          if (project) {
+            const projectID = project.pid;
+
+            // https://chatgpt.com/share/6709136b-cb38-800b-9548-7eb938fdd50e
+            db.get("SELECT sid FROM skills WHERE sname=?", [selectSkill], function (error, skill) {
+              if (error) {
+                console.log("ERROR retrieving skill ID: ", error);
+                return res.redirect("/projects");
+              }
+
+              if (skill) {
+                const skillID = skill.sid;
+
+                db.run("INSERT INTO project_skills (pid, sid) VALUES (?, ?)", [projectID, skillID], function (error) {
+                  if (error) {
+                    console.log("ERROR inserting into project_skills: ", error);
+                    return res.redirect("/projects");
+                  }
+
+                  console.log("Successfully added skills into project_skills");
+                  res.redirect("/projects");
+                });
+              } else {
+                console.log("Skill not found");
+                res.redirect("/projects");
+              }
+            });
+          } else {
+            console.log("Project not found after insertion");
+            res.redirect("/projects");
+          }
+        }
+      );
     }
-  });
+  );
 });
+
 app.get("/project/modify/:projid", function (req, res) {
   const id = req.params.projid;
   db.get("SELECT * FROM projects WHERE pid=?", [id], (error, theProject) => {
@@ -212,22 +258,82 @@ app.get("/project/modify/:projid", function (req, res) {
     }
   });
 });
+// app.post("/project/modify/:projid", function (req, res) {
+//   const id = req.params.projid;
+//   const title = req.body.projtitle;
+//   const year = req.body.projyear;
+//   const type = req.body.projtype;
+//   const description = req.body.projdesc;
+
+//   const url = req.body.projurl;
+//   db.run(
+//     `UPDATE projects SET ptitle=?, pyear=?, ptype=?, pdesc=?, purl=? WHERE pid=?`,
+//     [title, year, type, description, url, id],
+//     (error) => {
+//       if (error) {
+//         console.log("ERROR: ", error);
+//         res.redirect("/projects");
+//       } else {
+//         res.redirect("/projects");
+//       }
+//     }
+//   );
+// });
 app.post("/project/modify/:projid", function (req, res) {
   const id = req.params.projid;
   const title = req.body.projtitle;
   const year = req.body.projyear;
   const type = req.body.projtype;
+  const description = req.body.projdesc;
   const url = req.body.projurl;
+  const selectedSkill = req.body.projskill; // Get the selected skill from the form
+
   db.run(
-    `UPDATE projects SET ptitle=?, pyear=?, ptype=?, purl=? WHERE pid=?`,
-    [title, year, type, url, id],
-    (error) => {
+    `UPDATE projects SET ptitle=?, pyear=?, ptype=?, pdesc=?, purl=? WHERE pid=?`,
+    [title, year, type, description, url, id],
+    function (error) {
       if (error) {
         console.log("ERROR: ", error);
-        res.redirect("/projects");
-      } else {
-        res.redirect("/projects");
+        return res.redirect("/projects");
       }
+
+      //   https://chatgpt.com/share/6709136b-cb38-800b-9548-7eb938fdd50e 11/10-2024
+      // Step 2: Remove existing skills associated with the project
+      db.run("DELETE FROM project_skills WHERE pid=?", [id], function (error) {
+        if (error) {
+          console.log("ERROR: ", error);
+          return res.redirect("/projects");
+        }
+
+        // Step 3: Insert the new skill into the project_skills table
+        if (selectedSkill) {
+          // Find the skill ID (sid) for the selected skill
+          db.get("SELECT sid FROM skills WHERE sname = ?", [selectedSkill], function (error, skill) {
+            if (error) {
+              console.log("ERROR: ", error);
+              return res.redirect("/projects");
+            }
+
+            if (skill) {
+              // Insert into the project_skills table
+              db.run("INSERT INTO project_skills (pid, sid) VALUES (?, ?)", [id, skill.sid], function (error) {
+                if (error) {
+                  console.log("ERROR: ", error);
+                } else {
+                  console.log("Project and skill successfully associated!");
+                }
+                res.redirect("/projects");
+              });
+            } else {
+              console.log("No matching skill found for the selected skill");
+              res.redirect("/projects");
+            }
+          });
+        } else {
+          // If no skill is selected, just redirect
+          res.redirect("/projects");
+        }
+      });
     }
   );
 });
@@ -344,10 +450,10 @@ app.get("/users", (req, res) => {
     }
   });
 });
-app.get("/user/:userid", function (req, res) {
-  console.log("User route parameter userid: " + JSON.stringify(req.params.uid));
+app.get("/user/:uid", function (req, res) {
+  console.log("User route parameter uid: " + JSON.stringify(req.params.uid));
   // select in the table with the given id
-  db.get("SELECT * FROM users WHERE uid=?", [req.params.usertid], (error, theUser) => {
+  db.get("SELECT * FROM users WHERE uid=?", [req.params.uid], (error, theUser) => {
     if (error) {
       console.log("ERROR: ", error);
     } else {
@@ -356,18 +462,18 @@ app.get("/user/:userid", function (req, res) {
     }
   });
 });
-app.get("/user/delete/:userid", function (req, res) {
-  console.log("User route parameter userid: " + JSON.stringify(req.params.userid));
-  db.run("DELETE FROM users WHERE uid=?", [req.params.userid], (error) => {
+app.get("/user/delete/:uid", function (req, res) {
+  console.log("User route parameter uid: " + JSON.stringify(req.params.uid));
+  db.run("DELETE FROM users WHERE uid=?", [req.params.uid], (error) => {
     if (error) {
       console.log("ERROR: ", error);
     } else {
-      console.log("The user " + req.params.userid + " has been deleted");
+      console.log("The user " + req.params.uid + " has been deleted");
       res.redirect("/users");
     }
   });
 });
-app.get("/user/modify/:projid", function (req, res) {
+app.get("/user/modify/:uid", function (req, res) {
   const id = req.params.uid;
   db.get("SELECT * FROM users WHERE uid=?", [id], (error, theUser) => {
     if (error) {
@@ -379,11 +485,11 @@ app.get("/user/modify/:projid", function (req, res) {
     }
   });
 });
-app.post("/user/modify/:projid", function (req, res) {
-  const id = req.params.userid;
-  const email = req.body.useremail;
+app.post("/user/modify/:uid", function (req, res) {
+  const id = req.params.uid;
+  const email = req.body.usermail;
   const name = req.body.username;
-  db.run(`UPDATE users SET umail=?, uname=?, upassword=? WHERE uid=?`, [email, name, id], (error) => {
+  db.run(`UPDATE users SET umail=?, uname=? WHERE uid=?`, [email, name, id], (error) => {
     if (error) {
       console.log("ERROR: ", error);
       res.redirect("/users");
@@ -417,13 +523,19 @@ app.use(function (err, req, res, next) {
 //! LISTEN
 //!--------
 app.listen(port, function () {
-  // initTableSkills(db);
-  //   initTableProjects(db);
+  //   initTableSkills(db);
+  initTableProjects(db);
   //   initTableUsers(db);
   //   initTableComments(db);
-  //   initTableJoin(db);
+  //   deleteTable(db);
+  initTableJoin(db);
   console.log("Server up and running, listening on port" + `${port}` + "...   :)");
 });
+
+// function deleteTable(mydb) {
+//   db.run("DROP TABLE IF EXISTS projects", console.log("---> Table was deleted"));
+//   db.run("DROP TABLE IF EXISTS project_skills", console.log("---> Table was deleted"));
+// }
 
 //!-----------
 //! FUNCTIONS
@@ -435,6 +547,8 @@ function initTableProjects(mydb) {
       ptitle: "NMD Patch",
       ptype: "Illustration",
       pyear: "2024",
+      pdesc:
+        "The official kickoff patch 2024 for NMD created in Illustrator. This pactch was sold during the kickoff by the fadders of NMD.",
       purl: "/img/nmd_2024_patch.png",
     },
     {
@@ -442,6 +556,8 @@ function initTableProjects(mydb) {
       ptitle: "NMD Hoodie Print",
       ptype: "Illustration",
       pyear: "2024",
+      pdesc:
+        "This design was actually a collaboration with Erik Sandqvist. He did the design for the NMD Kickoff 2024 flag and I did the design for the NMD Kickoff 2024 patch. Combining the two and then outlining the illustrations in white created the design then printed on each NMD fadders hoodie.",
       purl: "/img/nmd_hoodie.png",
     },
     {
@@ -449,6 +565,8 @@ function initTableProjects(mydb) {
       ptitle: "Mulan",
       ptype: "Illustration",
       pyear: "2021",
+      pdesc:
+        "I created this project during my last year in highschool in the grapghic design course. The assignment was to illustrate a digital poster in Adobe Illustrator by taking inspiration from realistic pictures. I chose the poster for the, then, new live action of Mulan because I wanted a challange. All of the classes posters where hung up in the schools hallway as a form of a gallery wall.",
       purl: "/img/IMG_1019.jpeg",
     },
     {
@@ -456,6 +574,8 @@ function initTableProjects(mydb) {
       ptitle: "Pandemic eyes",
       ptype: "Illustration",
       pyear: "2021",
+      pdesc:
+        "This painting was created in art class during my first year of highscool. This was during the begining of the pandemic and the vision for the assignment was to create something meaningful without words. This painting symbolises the lonelyness of isolation during the pandemic.",
       purl: "/img/IMG_0899.png",
     },
     {
@@ -463,6 +583,8 @@ function initTableProjects(mydb) {
       ptitle: "Zonne Magazine",
       ptype: "Illustration",
       pyear: "2024",
+      pdesc:
+        "This magazine was a group project for the course Visual Communication last semester of university. I created this with Nellie Olsson Wennberg, Erik Sandqvist and Anton Kinnander. The assignemnt was to create a magazine with some requirenments. We chose to do a travel magazine highlighting hidden gems but also popular locations in Europe. This project was created using mostly InDesign but also Photoshop.",
       purl: "/img/zonne-cover.jpeg",
     },
     {
@@ -470,6 +592,8 @@ function initTableProjects(mydb) {
       ptitle: "Marvin",
       ptype: "Programming",
       pyear: "2022",
+      pdesc:
+        "Marvin or Pingu, is a chatbot that can do what you ask it to do by choosing an option from 1-12 or the inventory. This project was created in Python code language when I studied webbprogramming at Blekinge Tekniska högskola, BTH. ",
       purl: "/img/marvin.png",
     },
     {
@@ -477,6 +601,8 @@ function initTableProjects(mydb) {
       ptitle: "ENE Postery",
       ptype: "Programming",
       pyear: "2023",
+      pdesc:
+        "This was a group project by me and Nellie Olsson Wennberg for the course Web and User Interface Design. The assignment was to create a hardcoded interactive website using CSS, HTML and JavaScript. We began by sketching a lo-fi prototype to then apply it to the hi-fi prototype in figma. Then we wrote the code using Visual Studio Code. The website's purpose is to sell posters online. You can filter your preferences, read about each artist and so on.",
       purl: "/img/ene.png",
     },
     {
@@ -484,6 +610,8 @@ function initTableProjects(mydb) {
       ptitle: "Fast And Fantastic",
       ptype: "Programming",
       pyear: "2024",
+      pdesc:
+        "This group project was done by me and Erik Sandqvist in the course Foundations of Programming. Fast and Fantastic is a car racing game programmed using javaSctript in the form of canvas.js and basic HTML and CSS to display it online. ",
       purl: "/img/fastandfantastic.png",
     },
     {
@@ -491,6 +619,8 @@ function initTableProjects(mydb) {
       ptitle: "Götasol",
       ptype: "Photography",
       pyear: "2021",
+      pdesc:
+        "This picture was taken when I went on a boat trip with my family, traviling along the Göta Kanal. This was a beautiful sunset peeking through behind the trees that I just needed to snap a picture of.",
       purl: "/img/sunset.jpeg",
     },
     {
@@ -498,12 +628,14 @@ function initTableProjects(mydb) {
       ptitle: "Söder",
       ptype: "Photography",
       pyear: "2024",
+      pdesc:
+        "This image was shot in the middle of summer in söder, Stockholm. Me and my friend was walking around and I thought it looked aestetic and therefore snaped a shot of it.",
       purl: "/img/sthlm.jpeg",
     },
   ];
   db.serialize(() => {
     db.run(
-      "CREATE TABLE IF NOT EXISTS projects (pid INTEGER PRIMARY KEY AUTOINCREMENT, ptitle TEXT NOT NULL, pyear INTEGER NOT NULL, ptype TEXT NOT NULL, purl TEXT NOT NULL)",
+      "CREATE TABLE IF NOT EXISTS projects (pid INTEGER PRIMARY KEY AUTOINCREMENT, ptitle TEXT NOT NULL, pyear INTEGER NOT NULL, ptype TEXT NOT NULL, pdesc TEXT NOT NULL, purl TEXT NOT NULL, sid INTEGER, FOREIGN KEY (sid) REFERENCES skills(sid))",
       (error) => {
         if (error) {
           console.log("ERROR: ", error);
@@ -512,8 +644,16 @@ function initTableProjects(mydb) {
 
           projects.forEach((oneProject) => {
             db.run(
-              "INSERT INTO projects (pid, ptitle, pyear, ptype, purl) VALUES (?, ?, ?, ?, ?)",
-              [oneProject.pid, oneProject.ptitle, oneProject.pyear, oneProject.ptype, oneProject.purl],
+              "INSERT INTO projects (pid, ptitle, pyear, ptype, pdesc, purl, sid) VALUES (?, ?, ?, ?, ?, ?, ?)",
+              [
+                oneProject.pid,
+                oneProject.ptitle,
+                oneProject.pyear,
+                oneProject.ptype,
+                oneProject.pdesc,
+                oneProject.purl,
+                oneProject.sid,
+              ],
               (error) => {
                 if (error) {
                   console.log("ERROR: ", error);
@@ -533,56 +673,98 @@ function initTableSkills(mydb) {
   const skills = [
     {
       sid: "1",
-      sname: "Adobe programs",
-      stype: "Design",
-      sdesc: "Photoshop, Illustrator, InDesign, PremierPro, Audition, Adobe XD",
-    },
-    {
-      sid: "2",
       sname: "HTML",
       stype: "Programming Language",
       sdesc: "Used to build websites",
     },
     {
-      sid: "3",
+      sid: "2",
       sname: "CSS",
       stype: "Programming Language",
       sdesc: "Used to style websites",
     },
     {
-      sid: "4",
+      sid: "3",
       sname: "JavaScript",
       stype: "Programming Language",
       sdesc: "Used to develope websites",
     },
     {
-      sid: "5",
+      sid: "4",
       sname: "Python",
       stype: "Programming Language",
       sdesc: "Used for building websites and software, automate tasks, and conduct data analysis",
     },
     {
-      sid: "6",
+      sid: "5",
       sname: "PHP",
       stype: "Programming Language",
       sdesc: "Used to script websites that are dynamic and interactive.",
     },
     {
-      sid: "7",
+      sid: "6",
       sname: "SQL and SQLite",
       stype: "Programming language",
       sdesc: "Database",
     },
     {
-      sid: "8",
+      sid: "7",
       sname: "Audacity",
       stype: "Music",
       sdesc: "Used to cut, mix and remix music",
     },
+    {
+      sid: "8",
+      sname: "Photoshop",
+      stype: "Adobe Program",
+      sdesc: "Program for editing images",
+    },
+    {
+      sid: "9",
+      sname: "Illustrator",
+      stype: "Adobe Program",
+      sdesc: "Program for creating illustrations",
+    },
+    {
+      sid: "10",
+      sname: "InDesign",
+      stype: "Adobe Program",
+      sdesc: "Program for creating layouts",
+    },
+    {
+      sid: "11",
+      sname: "PremierPro",
+      stype: "Adobe Program",
+      sdesc: "Program for editing videos",
+    },
+    {
+      sid: "12",
+      sname: "Audition",
+      stype: "Adobe Program",
+      sdesc: "Program for mixing, edeting and creating audio content",
+    },
+    {
+      sid: "13",
+      sname: "AdobeXD",
+      stype: "Adobe Program",
+      sdesc: "Program for creating vectorizised prototypes for applications",
+    },
+    {
+      sid: "14",
+      sname: "Photography",
+      stype: "Camera",
+      sdesc: "Canon IXUS, Iphone, Fujifilm Intax poloroid camera",
+    },
+    {
+      sid: "15",
+      sname: "Painting",
+      stype: "Visual art",
+      sdesc: "Acrylic, akvarell, pencil",
+    },
   ];
   db.serialize(() => {
     db.run(
-      "CREATE TABLE IF NOT EXISTS skills (sid INTEGER PRIMARY KEY AUTOINCREMENT, sname TEXT NOT NULL, stype TEXT NOT NULL, sdesc TEXT NOT NULL)",
+      "CREATE TABLE IF NOT EXISTS skills (sid INTEGER PRIMARY KEY AUTOINCREMENT, sname TEXT NOT NULL, stype TEXT NOT NULL, sdesc TEXT NOT NULL, pid INTEGER, FOREIGN KEY (pid) REFERENCES projects(pid) )",
       (error) => {
         if (error) {
           console.log("ERROR: ", error);
@@ -591,8 +773,8 @@ function initTableSkills(mydb) {
 
           skills.forEach((oneSkill) => {
             db.run(
-              "INSERT INTO skills (sid, sname, stype, sdesc) VALUES (?, ?, ?, ?)",
-              [oneSkill.sid, oneSkill.sname, oneSkill.stype, oneSkill.sdesc],
+              "INSERT INTO skills (sid, sname, stype, sdesc, pid) VALUES (?, ?, ?, ?, ?)",
+              [oneSkill.sid, oneSkill.sname, oneSkill.stype, oneSkill.sdesc, oneSkill.pid],
               (error) => {
                 if (error) {
                   console.log("ERROR: ", error);
@@ -611,7 +793,7 @@ function initTableSkills(mydb) {
 function initTableUsers(mydb) {
   db.serialize(() => {
     db.run(
-      "CREATE TABLE IF NOT EXISTS users (uid INTEGER PRIMARY KEY AUTOINCREMENT, umail TEXT NOT NULL, uname TEXT NOT NULL, upassword TEXT NOT NULL)",
+      "CREATE TABLE IF NOT EXISTS users (uid INTEGER PRIMARY KEY, umail TEXT NOT NULL, uname TEXT NOT NULL, upassword TEXT NOT NULL)",
       (error) => {
         if (error) {
           console.log("ERROR: ", error);

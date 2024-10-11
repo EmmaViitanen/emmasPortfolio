@@ -79,6 +79,11 @@ a {
   align-items: center;
 }
 
+.underlined {
+  text-decoration: underline;
+  text-align: center;
+}
+
 /* ! MAIN HANDLEBARS !*/
 
 .off-screen-menu,
@@ -177,41 +182,60 @@ section h4 {
 }
 
 /* ! ABOUT HANDLEBARS ! */
+.about-container {
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 4rem;
+  row-gap: 4rem;
+  align-items: center;
+  justify-content: center;
+  text-align: justify; */
+  display: flex;
+  justify-content: space-evenly;
+  text-align: justify;
+  align-items: center;
+  margin: 3rem 0rem 5rem 0rem;
+}
 
-#aboutSection {
+.aboutSection {
   width: 30rem;
+}
+#aboutImg {
+  width: auto;
+  height: 35rem;
+  border-radius: 12rem 12rem 0 0;
+}
+
+#skillsSection {
+  margin-top: 5rem;
+}
+
+#sname {
+  font-weight: 600;
 }
 
 /* ! CONTACT HANDLEBARS ! */
-.con-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px;
-}
 
-.con-form input {
-  border: none;
-  border-bottom: 1px solid var(--hColor);
-  padding: 20px;
-  outline: none;
+.contCon h1 {
+  margin: 5rem;
 }
 
 #full-name,
-#message {
-  width: 30rem;
-}
-
 #phone,
-#email {
-  width: 15rem;
+#contactForm #email {
+  width: 40rem;
+  margin: 1rem 0 1rem;
 }
-
-#cont-btn {
-  width: 10rem;
-  height: 3rem;
-  margin-top: 2rem;
-  cursor: pointer;
+textarea {
+  height: 10rem;
+  resize: none;
+  width: 40rem;
+  margin: 2rem 0 5rem 0;
+  padding: 20px;
+  border: 1px solid var(--hColor);
+  border-radius: 25px;
+  background: transparent;
+  outline: none;
 }
 /* ! LOGIN HANDLEBARS ! */
 .form {
@@ -239,6 +263,7 @@ section h4 {
   width: 20rem;
   margin-bottom: 20px;
   padding-left: 20px;
+  padding: 0px 20px;
   border: 1px solid var(--hColor);
   border-radius: 25px;
   background: transparent;
@@ -252,12 +277,6 @@ section h4 {
 
 /* ! PROJECT HANDLEBARS ! */
 .project-container {
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 5rem;
-  row-gap: 5rem;
-  margin: 10rem;
-  grid-template-areas: "object object object"; */
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -316,6 +335,7 @@ section h4 {
 
 /* ? PHONES ? */
 @media only screen and (max-width: 500px) {
+  /* * Main handlebars  and home* */
   .nav-computer {
     display: none;
   }
@@ -402,6 +422,32 @@ section h4 {
     background-color: rgb(255, 255, 255);
   }
   #homepage {
-    font-size: 3rem;
+    font-size: 2rem;
+  }
+  .home-container,
+  .about-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .homeImg,
+  #aboutImg {
+    width: 90%;
+    height: auto;
+    margin: 4rem 0 4rem 0;
+  }
+  /* * About handlebars * */
+  .aboutSection {
+    width: 90%;
+    font-size: 0.9rem;
+    text-align: left;
+  }
+
+  /* * Projects handlebars * */
+  .project-container {
+    grid-template-columns: 1fr;
+  }
+  .proj-img {
+    width: 90%;
   }
 }

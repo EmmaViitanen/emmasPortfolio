@@ -7,10 +7,9 @@
   <body>
     <h1 id="proj-header">projects</h1>
     {{#if session.isAdmin}}
-      <p><a href="/project/add/new">ADD NEW PROJECT</a></p>
+      <p><a class="addNewBtn" href="/project/add/new">ADD NEW +</a></p>
     {{/if}}
     <div class="project-container">
-      {{! make a grid}}
       {{#each projects}}
         <div class="object">
 
@@ -19,15 +18,18 @@
               alt="{{purl}}"
               class="proj-img"
             /></a>
-            </div>
-            <div class="object">
-          <h3 id="pname">{{ptitle}}</h3>
+        </div>
+        <div class="objectInfo">
+          <h3 id="pname">{{ptitle}} </h3>
           <p id="ptype">{{ptype}}</p>
-          <p id="skill"> {{this.skills}} </p>
-         
+          <p id="skill"> Skills used: {{this.skills}} </p>
+          <a href="/project/{{pid}}"><p>READ MORE</p></a>
           {{#if ../session.isAdmin}}
-          <a href="/project/modify/{{pid}}" class="modify">MODIFY</a>
-          <a href="/project/delete/{{pid}}" class="modify">DELETE</a>
+          <div class="modify">
+
+            <a href="/project/modify/{{pid}}" class="addNewBtn">MODIFY</a>
+            <a href="/project/delete/{{pid}}" class="addNewBtn">DELETE</a>
+          </div>
           {{/if}}
         </div>
       {{/each}}
@@ -37,10 +39,10 @@
     <div class="pagination">
 
     {{#if prevPage}}
-    <a href='/projects?page={{prevPage}}'>Previous</a>
+    <a class="addNewBtn" href='/projects?page={{prevPage}}'>Previous</a>
     {{/if}}
     {{#if nextPage}}
-    <a href='/projects?page={{nextPage}}'>Next</a>
+    <a class="addNewBtn" href='/projects?page={{nextPage}}'>Next</a>
     {{/if}}
     </div>
     

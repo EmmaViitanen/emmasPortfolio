@@ -10,9 +10,11 @@
       <form action="/login" method="post">
         <input type="text" name="username" class="loginInput" placeholder="Username" required />
         <input type="password" name="password" class="loginInput" placeholder="Password" required />
-        <button id="loginBtn" type="submit">Login</button>
-        <p>or</p>
-        <a class="red-button" href="/add-user">Register</a>
+        <button class="loginInput" type="submit">Login</button>
+      </form>
+      <p>or</p>
+      <form action="/add-user">
+        <button class="loginInput" type="submit">Register</button>
       </form>
       {{#if error}}
         <h1 class="error">{{error}}</h1>

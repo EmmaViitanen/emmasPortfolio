@@ -5,14 +5,12 @@
     <title>projects</title>
   </head>
   <body>
-    <h1 id="project-info">{{project.ptitle}}</h1>
-    <h3>{{project.pyear}}</h3>
-
-    <h4>{{project.ptype}} {{skills}}</h4>
     <div class="projDisplay">
+      <div class="projDisplayText">
+        <h1 class="project-info">{{project.ptitle}}</h1>
+        {{project.pdesc}}
+      </div>
       <img src="{{project.purl}}" alt="{{project.purl}}" id="pid-img" />
     </div>
-    {{project.pdesc}}
-
   </body>
 </html>

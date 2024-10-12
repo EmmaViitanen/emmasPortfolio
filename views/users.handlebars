@@ -6,11 +6,13 @@
   </head>
   <body>
     <div class="container-centered">
-      <table class="users">
+      <h1>user management system</h1>
+      <table class="users" id="laptopUsers">
         <tr id="tableHead">
           <th>ID</th>
           <th>EMAIL</th>
           <th>USERNAME</th>
+          <th>STATUS</th>
           <th>EDIT</th>
         </tr>
         {{#each users}}
@@ -18,15 +20,56 @@
             <th>{{uid}}</th>
             <th>{{umail}}</th>
             <th>{{uname}}</th>
-            <th>
-
-              <a href="/user/modify/{{uid}}" class="red-button">MODIFY</a>
-              <a href="/user/delete/{{uid}}" class="red-button">DELETE</a>
-
-            </th>
+            {{#if isAdmin}}
+              <th>Admin</th>
+              <th>Can't be modified</th>
+            {{else}}
+              <th>User</th>
+              <th>
+                <a href="/user/modify/{{uid}}" class="navBtn">MODIFY</a>
+                <a href="/user/delete/{{uid}}" class="navBtn">DELETE</a>
+              </th>
+            {{/if}}
           </tr>
         {{/each}}
       </table>
+      {{#each users}}
+        <table class="users" id="phoneUsers">
+          <tr>
+            <th class="phoneUserHeader">ID</th>
+            <th class="phoneUserInfo">{{uid}}</th>
+          </tr>
+          <tr>
+            <th class="phoneUserHeader">EMAIL</th>
+            <th class="phoneUserInfo">{{umail}}</th>
+          </tr>
+          <tr>
+            <th class="phoneUserHeader">USERNAME</th>
+            <th class="phoneUserInfo">{{uname}}</th>
+          </tr>
+          <tr>
+            <th class="phoneUserHeader">STATUS</th>
+            <th class="phoneUserInfo">
+              {{#if isAdmin}}
+                Admin
+              {{else}}
+                User
+              {{/if}}
+            </th>
+          </tr>
+          <tr>
+            <th class="phoneUserHeader">EDIT</th>
+            <th class="phoneUserInfo" id="userEdit">
+                {{#if isAdmin}}
+                Can't be modified
+                {{else}}
+              <a href="/user/modify/{{uid}}" class="addNewBtn">M</a>
+              <a href="/user/delete/{{uid}}" class="addNewBtn">D</a></th>
+              {{/if}}
+          </tr>
+        </table>
+      {{/each}}
     </div>
+
   </body>
 </html>

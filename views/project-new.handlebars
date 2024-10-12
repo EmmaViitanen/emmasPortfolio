@@ -51,13 +51,12 @@
             <option value='Painting'{{#if (eq project.skills "Painting")}}selected="selected"{{/if}}> Painting</option>
         </select>
         <input type="text" name="projdesc" class="loginInput" id="projdesc" placeholder="Description" {{#if project.pdesc}} value="{{project.pdesc}}"{{/if}}/>
-      
         <input
           type="text"
           name="projurl"
           class="loginInput"
           id="projurl"
-          placeholder="/img/xxx.png"
+          placeholder="Image"
           {{#if project.purl}} value="{{project.purl}}"{{/if}}
         />
         <input type="submit" class="red-button" value={{#if project.pid}}"edit project" {{else}} "Add new project" {{/if}}/>

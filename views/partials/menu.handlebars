@@ -5,6 +5,9 @@
     <li><a href="/about">ABOUT ME</a></li>
     <li><a href="/contact">CONTACT ME</a></li>
     <li><a href="/projects">PROJECTS</a></li>
+    {{#if session.isLoggedIn}}
+      <li><a href="/profile">PROFILE</a></li>
+    {{/if}}
     {{#if session.isAdmin}}
       <li><a href="/users">USERS</a></li>
     {{/if}}

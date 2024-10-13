@@ -187,7 +187,7 @@ section h4 {
 }
 
 .homeImg {
-  width: 23rem;
+  width: 23%;
   border-radius: 160px 160px 0 0;
 }
 
@@ -222,7 +222,7 @@ section h4 {
 
 #aboutImg {
   width: auto;
-  height: 35rem;
+  height: 30rem;
   border-radius: 12rem 12rem 0 0;
 }
 

@@ -1,22 +1,12 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Users</title>
-  </head>
-  <body>
+<h1>Edit user</h1>
 
-    <h1>Edit user</h1>
+<div class="form">
+  <form action="/user/modify/{{user.uid}}" method="POST">
 
-    <div class="form">
-      <form action="/user/modify/{{user.uid}}" method="POST">
+    <input type="text" name="usermail" class="loginInput" id="umail" value="{{user.umail}}" />
+    <input type="text" name="username" class="loginInput" id="uname" value="{{user.uname}}" />
 
-        <input type="text" name="usermail" class="loginInput" id="umail" value="{{user.umail}}" />
-        <input type="text" name="username" class="loginInput" id="uname" value="{{user.uname}}" />
+    <input type="submit" class="red-button" value="EDIT USER" />
 
-        <input type="submit" class="red-button" value="EDIT USER" />
-
-      </form>
-    </div>
-  </body>
-</html>
+  </form>
+</div>

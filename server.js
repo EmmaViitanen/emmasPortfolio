@@ -499,16 +499,31 @@ app.get("/style.css", function (req, res) {
   res.sendFile("/style.css", { root: "public" });
 });
 
+//!----------------
+//! 404 NOT FOUND !
+//!----------------
+app.use(function (req, res) {
+  res.status(404).render("404.handlebars");
+});
+
+//!-----------
+//! 500 ERROR
+//!-----------
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).render("500");
+});
+
 //!--------
 //! LISTEN
 //!--------
 app.listen(port, function () {
   //   initTableSkills(db);
-  initTableProjects(db);
+  //   initTableProjects(db);
   //   initTableUsers(db);
   //   initTableComments(db);
   //   deleteTable(db);
-  initTableJoin(db);
+  //   initTableJoin(db);
   console.log("Server up and running, listening on port" + `${port}` + "...   :)");
 });
 

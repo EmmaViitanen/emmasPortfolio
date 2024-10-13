@@ -6,10 +6,10 @@
   --hHover: rgba(137, 29, 26, 0.5);
   --white: rgb(255, 255, 255);
   --gray: #e2e2e2;
-  /* --sansSerif: "Nunito Sans", sans-serif; */
-  /* --serif: "Playfair Display", serif; */
-  --serif: serif;
-  --sansSerif: sans-serif;
+  --sansSerif: "Nunito Sans", sans-serif;
+  --serif: "Playfair Display", serif;
+  /* --serif: serif;
+  --sansSerif: sans-serif; */
 }
 
 * {
@@ -50,29 +50,8 @@ li,
 a {
   list-style-type: none;
   text-decoration: none;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: var(--sansSerif);
   font-weight: 300;
-}
-
-.form button,
-.form button a,
-.red-button {
-  transition: 0.5s ease;
-  border-radius: 25px;
-  height: 50px;
-  width: 10rem;
-  background-color: var(--hColor);
-  font-family: "Nunito Sans", sans-serif;
-  font-weight: 500;
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-  padding: 10px;
-}
-
-.form button:hover,
-.form button a:hover,
-.red-button:hover {
-  background-color: var(--hHover);
 }
 
 .underlined {
@@ -115,6 +94,32 @@ a {
   padding: 0.5rem 1rem;
   border-radius: 25px;
   margin: 0.3rem 0.7rem;
+}
+
+.form button,
+.form button a,
+.red-button {
+  transition: 0.5s ease;
+  border-radius: 25px;
+  height: 50px;
+  width: 10rem;
+  background-color: var(--hColor);
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  padding: 10px;
+}
+
+.form button:hover,
+.form button a:hover,
+.red-button:hover {
+  background-color: var(--hHover);
+}
+
+.svg img {
+  max-width: 2rem;
+  height: auto;
 }
 
 /* ! MAIN HANDLEBARS !*/
@@ -391,6 +396,11 @@ textarea {
   align-items: center;
 }
 
+/* ! PROFILE HANDLEBARS ! */
+.container {
+  text-align: center;
+  margin-top: 1rem;
+}
 /* # MEDIA QUERIES # */
 
 /* ? TABLETS ? */
@@ -513,7 +523,7 @@ textarea {
 }
 
 /* ? PHONES ? */
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 425px) {
   h1 {
     font-size: 2.5rem;
     margin-top: 2rem;
@@ -578,7 +588,8 @@ textarea {
     display: block;
   }
 
-  .users tr th a {
-    margin: 1rem;
+  .users tr th {
+    max-width: 10rem;
+    overflow: scroll;
   }
 }

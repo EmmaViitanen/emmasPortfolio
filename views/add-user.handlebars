@@ -1,26 +1,17 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
-  </head>
-  <body>
-    <h1>Register</h1>
-    <div class="form">
-      <form action="/add-user" method="POST" class="reg-form">
-        <input type="email" name="uemail" placeholder="Email" class="loginInput" id="uemail" required />
-        <input type="text" name="uname" placeholder="Username" class="loginInput" id="uname" required />
-        <input
-          type="password"
-          name="upassword"
-          placeholder="Password"
-          class="loginInput"
-          id="upassword"
-          minlength="6"
-          required
-        />
-        <button type="submit" class="loginInput" id="reg-btn">Register</button>
-      </form>
-    </div>
-  </body>
-</html>
+<h1>Register</h1>
+<div class="form">
+  <form action="/add-user" method="POST" class="reg-form">
+    <input type="email" name="uemail" placeholder="Email" class="loginInput" id="uemail" required />
+    <input type="text" name="uname" placeholder="Username" class="loginInput" id="uname" required />
+    <input
+      type="password"
+      name="upassword"
+      placeholder="Password"
+      class="loginInput"
+      id="upassword"
+      minlength="6"
+      required
+    />
+    <button type="submit" class="loginInput" id="reg-btn">Register</button>
+  </form>
+</div>

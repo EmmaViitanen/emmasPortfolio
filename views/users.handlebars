@@ -1,10 +1,3 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Users</title>
-  </head>
-  <body>
     <div class="container-centered">
       <h1>user management system</h1>
       <table class="users" id="laptopUsers">
@@ -63,13 +56,10 @@
                 {{#if isAdmin}}
                 Can't be modified
                 {{else}}
-              <a href="/user/modify/{{uid}}" class="addNewBtn">M</a>
-              <a href="/user/delete/{{uid}}" class="addNewBtn">D</a></th>
+              <a href="/user/modify/{{uid}}" class="svg"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIaHnuwHjcTrByR8Adm17lDxEISmjz-Tms5Q&s" alt="Modify pencil"></a>
+              <a href="/user/delete/{{uid}}" class="svg"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSRHOByOX5kkgckX1gBevgvlLnPQ8GK-c7JQ&s" alt="Delete trashcan"></a></th>
               {{/if}}
           </tr>
         </table>
       {{/each}}
     </div>
-
-  </body>
-</html>

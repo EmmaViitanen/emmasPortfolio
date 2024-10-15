@@ -25,23 +25,23 @@
           <option value="Photography"{{#if (eq project.ptype "Photography")}}selected="selected"{{/if}}>Photography</option>
           <option value="Programming"{{#if (eq project.ptype "Programming")}}selected="selected"{{/if}}>Programming</option>
         </select>
-        <select type="text" name="projskill" class="loginInput" id="projskill">
-          <option value=""> Choose skill</option>
-            <option value='HTML'{{#if (eq project.skills "HTML")}}selected="selected"{{/if}}> HTML</option>
-            <option value='CSS'{{#if (eq project.skills "CSS")}}selected="selected"{{/if}}> CSS</option>
-            <option value='JavaScript'{{#if (eq project.skills "JavaScript")}}selected="selected"{{/if}}> JavaScript</option>
-            <option value='Python'{{#if (eq project.skills "Python")}}selected="selected"{{/if}}> Python</option>
-            <option value='PHP'{{#if (eq project.skills "PHP")}}selected="selected"{{/if}}> PHP</option>
-            <option value='SQLite'{{#if (eq project.skills "SQLite")}}selected="selected"{{/if}}> SQLite</option>
-            <option value='Audacity'{{#if (eq project.skills "Audacity")}}selected="selected"{{/if}}> Audacity</option>
-            <option value='Photoshop'{{#if (eq project.skills "Photoshop")}}selected="selected"{{/if}}> Photoshop</option>
-            <option value='Illustrator'{{#if (eq project.skills "Illustrator")}}selected="selected"{{/if}}> Illustrator</option>
-            <option value='InDesign'{{#if (eq project.skills "InDesign")}}selected="selected"{{/if}}> InDesign</option>
-            <option value='PremierPro'{{#if (eq project.skills "PremierPro")}}selected="selected"{{/if}}> PremierPro</option>
-            <option value='Audition'{{#if (eq project.skills "Audition")}}selected="selected"{{/if}}> Audition</option>
-            <option value='AdobeXD'{{#if (eq project.skills "AdobeXD")}}selected="selected"{{/if}}> AdobeXD</option>
-            <option value='Photography'{{#if (eq project.skills "Photography")}}selected="selected"{{/if}}> Photography</option>
-            <option value='Painting'{{#if (eq project.skills "Painting")}}selected="selected"{{/if}}> Painting</option>
+        <select type="text" name="projskill" class="loginInput" id="projskill" required>
+          <option value=""> Required to choose skill</option>
+            <option value='HTML'{{#if (eq ../project.skills "HTML")}}selected="selected"{{/if}}> HTML</option>
+            <option value='CSS'{{#if (eq ../project.skills "CSS")}}selected="selected"{{/if}}> CSS</option>
+            <option value='JavaScript'{{#if (eq ../project.skills "JavaScript")}}selected="selected"{{/if}}> JavaScript</option>
+            <option value='Python'{{#if (eq ../project.skills "Python")}}selected="selected"{{/if}}> Python</option>
+            <option value='PHP'{{#if (eq ../project.skills "PHP")}}selected="selected"{{/if}}> PHP</option>
+            <option value='SQLite'{{#if (eq ../project.skills "SQLite")}}selected="selected"{{/if}}> SQLite</option>
+            <option value='Audacity'{{#if (eq ../project.skills "Audacity")}}selected="selected"{{/if}}> Audacity</option>
+            <option value='Photoshop'{{#if (eq ../project.skills "Photoshop")}}selected="selected"{{/if}}> Photoshop</option>
+            <option value='Illustrator'{{#if (eq ../project.skills "Illustrator")}}selected="selected"{{/if}}> Illustrator</option>
+            <option value='InDesign'{{#if (eq ../project.skills "InDesign")}}selected="selected"{{/if}}> InDesign</option>
+            <option value='PremierPro'{{#if (eq ../project.skills "PremierPro")}}selected="selected"{{/if}}> PremierPro</option>
+            <option value='Audition'{{#if (eq ../project.skills "Audition")}}selected="selected"{{/if}}> Audition</option>
+            <option value='AdobeXD'{{#if (eq ../project.skills "AdobeXD")}}selected="selected"{{/if}}> AdobeXD</option>
+            <option value='Photography'{{#if (eq ../project.skills "Photography")}}selected="selected"{{/if}}> Photography</option>
+            <option value='Painting'{{#if (eq ../project.skills "Painting")}}selected="selected"{{/if}}> Painting</option>
         </select>
         <input type="text" name="projdesc" class="loginInput" id="projdesc" placeholder="Description" {{#if project.pdesc}} value="{{project.pdesc}}"{{/if}}/>
         <input

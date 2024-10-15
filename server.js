@@ -286,6 +286,7 @@ app.post("/project/modify/:projid", function (req, res) {
       // ! Note that the first issue in the ChatGPT file was solved without the help of ChatGPT !
       // Step 2: Remove existing skills associated with the project
       db.run("DELETE FROM project_skills WHERE pid=?", [id], function (error) {
+        console.log("project " + id + " was deleted from project_skills");
         if (error) {
           console.log("ERROR: ", error);
           return res.redirect("/projects");
@@ -293,14 +294,15 @@ app.post("/project/modify/:projid", function (req, res) {
 
         // Step 3: Insert the new skill into the project_skills table
         if (selectedSkill) {
+          console.log(selectedSkill);
           // Find the skill ID (sid) for the selected skill
           db.get("SELECT sid FROM skills WHERE sname = ?", [selectedSkill], function (error, skill) {
             if (error) {
               console.log("ERROR: ", error);
               return res.redirect("/projects");
             }
-
             if (skill) {
+              console.log(skill);
               // Insert into the project_skills table
               db.run("INSERT INTO project_skills (pid, sid) VALUES (?, ?)", [id, skill.sid], function (error) {
                 if (error) {

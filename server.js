@@ -406,7 +406,7 @@ app.get("/add-user", (req, res) => {
   res.render("add-user.handlebars");
 });
 app.post("/add-user", (req, res) => {
-  const { uemail, uname, upassword } = req.body;
+  const { uemail, uname, upassword, isAdmin } = req.body;
   // Hashing the password before inserting it into the database
   bcrypt.hash(upassword, saltRounds, function (err, hash) {
     if (err) {
@@ -418,8 +418,13 @@ app.post("/add-user", (req, res) => {
         if (err) {
           res.status(500).send({ error: "Server error" });
         } else {
-          res.redirect("/login");
-          console.log("Your are registered");
+          if ((req.session.isAdmin = true)) {
+            res.redirect("/users");
+            console.log("You added a new user");
+          } else {
+            res.redirect("/login");
+            console.log("Your are registered");
+          }
         }
       });
     }

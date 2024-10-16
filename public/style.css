@@ -84,7 +84,7 @@ a {
   border: 1.5px solid var(--hColor);
 }
 
-/* add new proj btn */
+/* Buttons with border */
 .addNewBtn {
   color: var(--hColor);
   border: 1px solid var(--hColor);
@@ -356,7 +356,8 @@ textarea {
   display: none;
 }
 .users {
-  margin-top: 5rem;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
 }
 .user-table {
   display: flex;
@@ -370,6 +371,10 @@ textarea {
 .users th {
   box-shadow: 1px 1px 3px var(--black);
   padding: 20px;
+}
+
+#addNewUserBtn {
+  margin-top: 5rem;
 }
 
 /* ! PROFILE HANDLEBARS ! */

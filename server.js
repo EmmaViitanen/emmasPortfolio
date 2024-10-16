@@ -6,14 +6,14 @@ const adminPassword = "$2b$12$QM/utCih8TuPDbFdTaOhjO9q1u7N.sAHbohyuDN4tHgQHc1AAA
 //! PACKAGES
 //!----------
 const express = require("express");
-// Load the handlebars package for express
+
 const { engine } = require("express-handlebars");
 const sqlite3 = require("sqlite3");
 const session = require("express-session");
 const connectSqlite3 = require("connect-sqlite3");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-// const sanitizeHTML = require("sanitize-html");
+
 //-- BCRYPT --
 const bcrypt = require("bcrypt");
 const { throwDeprecation } = require("process");
@@ -171,21 +171,6 @@ app.get("/project/:projid", function (req, res) {
     }
   });
 });
-app.get("/project/delete/:projid", function (req, res) {
-  if (req.session.isAdmin) {
-    console.log("Project route parameter projid: " + JSON.stringify(req.params.projid));
-    db.run("DELETE FROM projects WHERE pid=?", [req.params.projid], (error) => {
-      if (error) {
-        console.log("ERROR: ", error);
-      } else {
-        console.log("The project " + req.params.projid + " has been deleted");
-        res.redirect("/projects");
-      }
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
 app.get("/project/add/new", function (req, res) {
   res.render("project-new.handlebars");
 });
@@ -251,6 +236,21 @@ app.post("/project/add/new", function (req, res) {
       );
     }
   );
+});
+app.get("/project/delete/:projid", function (req, res) {
+  if (req.session.isAdmin) {
+    console.log("Project route parameter projid: " + JSON.stringify(req.params.projid));
+    db.run("DELETE FROM projects WHERE pid=?", [req.params.projid], (error) => {
+      if (error) {
+        console.log("ERROR: ", error);
+      } else {
+        console.log("The project " + req.params.projid + " has been deleted");
+        res.redirect("/projects");
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
 });
 app.get("/project/modify/:projid", function (req, res) {
   const id = req.params.projid;
@@ -332,6 +332,7 @@ app.get("/login", (req, res) => res.render("login.handlebars"));
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
+  //   If the imputs are empty
   if (!username || !password) {
     model = { error: "Username and password are required.", message: "" };
     return res.status(400).render("login.handlebars", model);
@@ -349,7 +350,7 @@ app.post("/login", (req, res) => {
 
     if (user) {
       console.log("The username is the admin one!");
-
+      // Comparing the regestered password with the login one
       bcrypt.compare(password, user.upassword, (err, result) => {
         if (err) {
           const model = {
@@ -358,6 +359,7 @@ app.post("/login", (req, res) => {
           };
           res.render("login.handlebars", model);
         }
+        // If admin
         if (result && adminName === username) {
           console.log("The password is the admin one!");
 
@@ -369,7 +371,8 @@ app.post("/login", (req, res) => {
 
           res.redirect("/profile");
         } else if (result) {
-          console.log("The password is the admin one!");
+          // If user
+          console.log("The password is the user in one!");
 
           req.session.isAdmin = false;
           req.session.isLoggedIn = true;
@@ -404,7 +407,7 @@ app.get("/add-user", (req, res) => {
 });
 app.post("/add-user", (req, res) => {
   const { uemail, uname, upassword } = req.body;
-
+  // Hashing the password before inserting it into the database
   bcrypt.hash(upassword, saltRounds, function (err, hash) {
     if (err) {
       console.log("---> Error encrypting the password: "), err;
@@ -449,6 +452,7 @@ app.get("/users", (req, res) => {
   });
 });
 app.get("/user/:uid", function (req, res) {
+  // Reading the users in the user-table
   console.log("User route parameter uid: " + JSON.stringify(req.params.uid));
   db.get("SELECT * FROM users WHERE uid=?", [req.params.uid], (error, theUser) => {
     if (error) {

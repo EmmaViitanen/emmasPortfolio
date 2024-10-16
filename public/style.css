@@ -1,17 +1,21 @@
+/* Code borrowed from website - BEGIN  */
+/* Source: (Google Fonts, 2024, "Embeded code", https://fonts.google.com/selection/embed) */
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+/* Code borrowed from website - END  */
 
+/* ! CSS variables ! */
 :root {
   --hColor: rgb(137, 29, 26);
   --hHover: rgba(137, 29, 26, 0.5);
   --white: rgb(255, 255, 255);
-  --gray: #e2e2e2;
+  --gray: #333;
+  --black: rgb(0, 0, 0);
   --sansSerif: "Nunito Sans", sans-serif;
   --serif: "Playfair Display", serif;
-  /* --serif: serif;
-  --sansSerif: sans-serif; */
 }
 
+/* ! GENERAL CSS !*/
 * {
   box-sizing: border-box;
   padding: 0;
@@ -21,14 +25,13 @@
   font-style: normal;
 }
 
-/* ! GENERAL CSS !*/
 body {
-  background-color: white;
+  background-color: var(--white);
   z-index: 1;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+  margin: 0rem 1.5rem;
 }
 
+/* Headings */
 h1 {
   text-align: center;
   font-family: var(--sansSerif);
@@ -37,7 +40,6 @@ h1 {
   font-size: 3rem;
   color: var(--hColor);
 }
-
 h2,
 h3 {
   font-family: var(--sansSerif);
@@ -46,6 +48,7 @@ h3 {
   color: var(--hColor);
 }
 
+/* Text and links */
 li,
 a {
   list-style-type: none;
@@ -53,36 +56,35 @@ a {
   font-family: var(--sansSerif);
   font-weight: 300;
 }
-
 .underlined {
   text-decoration: underline;
   text-align: center;
 }
 
 /* ! BUTTONS ! */
+/* Login/logout btn */
 .logNavBtn {
   border: 1px solid var(--hColor);
 }
 
+/* Buttons with border :hover */
 .logNavBtn:hover,
 #profile-img:hover,
 .addNewBtn:hover {
   transition: 0.5s ease;
   border: 1.5px solid var(--hColor);
-  background-color: white;
+  background-color: var(--white);
   box-shadow: 5px 5px 5px var(--hHover);
 }
 
+/* Buttons without border :hover */
 .navBtn:hover {
   transition: 0.5s ease;
   box-shadow: 5px 5px 5px var(--hHover);
   border: 1.5px solid var(--hColor);
 }
 
-.navBtn.active {
-  font-weight: 900;
-}
-
+/* add new proj btn */
 .addNewBtn {
   color: var(--hColor);
   border: 1px solid var(--hColor);
@@ -90,12 +92,14 @@ a {
   border-radius: 25px;
 }
 
+/* Modify/delete buttons: users */
 .users tr th a {
   padding: 0.5rem 1rem;
   border-radius: 25px;
   margin: 0.3rem 0.7rem;
 }
 
+/* Submitting btn */
 .form button,
 .form button a,
 .red-button {
@@ -110,25 +114,24 @@ a {
   cursor: pointer;
   padding: 10px;
 }
-
 .form button:hover,
 .form button a:hover,
 .red-button:hover {
   background-color: var(--hHover);
 }
 
+/* profile btn */
 .svg img {
   max-width: 2rem;
   height: auto;
 }
 
 /* ! MAIN HANDLEBARS !*/
-
+/* No hamburger menu on laptop */
 .off-screen-menu,
 .nav-mobile {
   display: none;
 }
-
 .nav-computer {
   display: flex;
   justify-content: space-between;
@@ -139,19 +142,16 @@ a {
   justify-content: space-between;
   align-items: center;
 }
-
 .navCol li {
   margin: 0 0.7rem;
   line-height: 3rem;
   padding: 0 1rem;
   border-radius: 25px;
 }
-
 .navCol li a,
 .users tr th a {
   color: var(--hColor);
 }
-
 #profile-img {
   border-radius: 50%;
 }
@@ -162,30 +162,25 @@ a {
   justify-content: space-evenly;
   margin-top: 3rem;
 }
-
 .homeText {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
 .homepage {
   display: block;
   font-size: 2rem;
   text-align: center;
   font-style: italic;
 }
-
 section {
   margin-top: 2rem;
 }
-
 section h4 {
   margin-top: 0.5rem;
-  color: #000;
+  color: var(--black);
 }
-
 .homeImg {
   width: 23%;
   border-radius: 160px 160px 0 0;
@@ -199,18 +194,22 @@ section h4 {
   align-items: center;
   margin: 3rem 0rem 5rem 0rem;
 }
-
 .aboutSection {
   width: 30rem;
   display: flex;
   flex-direction: column;
   text-align: justify;
 }
+#aboutImg {
+  width: auto;
+  height: 30rem;
+  border-radius: 12rem 12rem 0 0;
+}
 
+/* skills table */
 #skillsHead {
   text-align: left;
 }
-
 .aboutTable {
   width: 80%;
   text-align: left;
@@ -219,34 +218,23 @@ section h4 {
 .aboutTable th {
   padding: 10px 20px;
 }
-
-#aboutImg {
-  width: auto;
-  height: 30rem;
-  border-radius: 12rem 12rem 0 0;
-}
-
 #skills {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
 #skillsSection {
   margin-top: 5rem;
 }
-
 #sname {
   font-weight: 600;
 }
 
 /* ! CONTACT HANDLEBARS ! */
-
 .contCon h1 {
   margin: 5rem;
 }
-
 #full-name,
 #phone,
 #contactForm #email {
@@ -264,7 +252,8 @@ textarea {
   background: transparent;
   outline: none;
 }
-/* ! LOGIN HANDLEBARS ! */
+
+/* ! LOGIN/REG HANDLEBARS ! */
 .form {
   text-align: center;
   display: flex;
@@ -272,11 +261,9 @@ textarea {
   justify-content: center;
   align-items: center;
 }
-
 .form h1 {
-  margin: 50px 0;
+  margin: 5rem 0;
 }
-
 .form form {
   display: flex;
   flex-direction: column;
@@ -284,7 +271,6 @@ textarea {
   align-items: center;
   width: 50%;
 }
-
 .loginInput {
   height: 50px;
   width: 20rem;
@@ -296,31 +282,27 @@ textarea {
   background: transparent;
   outline: none;
 }
-
 .loginInput:focus {
   transition: 0.5s ease;
-  background-color: white;
+  background-color: var(--white);
 }
 
-/* ! PROJECT HANDLEBARS ! */
+/* ! PROJECTS HANDLEBARS ! */
 .project-container {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 0.5em;
 }
-
-.proj-img {
-  width: auto;
-  max-height: 25rem;
-  border-radius: 45px;
-  box-shadow: 1px 5px 5px #333;
-}
-
 .modify {
   margin-top: 2rem;
 }
+.pagination {
+  text-align: center;
+  margin: 3rem 0rem 5rem 0rem;
+}
 
+/* Project display on projects page */
 .object {
   display: flex;
   align-items: center;
@@ -331,7 +313,16 @@ textarea {
   height: 30rem;
   width: 50rem;
 }
-
+.proj-img {
+  width: auto;
+  max-height: 25rem;
+  border-radius: 45px;
+  box-shadow: 1px 5px 5px var(--gray);
+}
+.objectInfo a p {
+  color: var(--black);
+  text-decoration: underline;
+}
 .objectInfo {
   display: flex;
   margin-top: 1rem;
@@ -340,20 +331,12 @@ textarea {
   margin-left: 5rem;
 }
 
+/* # PROJECT HANDLEBARS # */
 #pid-img {
   max-width: 100%;
   height: auto;
   width: 50%;
   margin: 2rem 0rem 5rem 0.5rem;
-}
-
-.pagination {
-  text-align: center;
-  margin: 3rem 0rem 5rem 0rem;
-}
-
-.project-info {
-  text-align: center;
 }
 .projDisplay {
   display: flex;
@@ -363,56 +346,53 @@ textarea {
 .projDisplayText {
   max-width: 30rem;
 }
-
-.objectInfo a p {
-  color: #000;
-  text-decoration: underline;
-}
-
-/* ! PROFILE HANDLEBARS !  */
-#empty {
-  width: 15rem;
-  border-radius: 50%;
+.project-info {
+  text-align: center;
 }
 
 /* ! USERS HANDLEBARS ! */
 #phoneUsers {
+  /* Don't display the view for phones */
   display: none;
 }
 .users {
   margin-top: 5rem;
 }
-#tableHead {
-  font-weight: 600;
-}
-.users th {
-  box-shadow: 1px 1px 3px black;
-  padding: 20px;
-}
-.container-centered {
+.user-table {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+#tableHead th {
+  font-weight: 600;
+}
+.users th {
+  box-shadow: 1px 1px 3px var(--black);
+  padding: 20px;
+}
 
 /* ! PROFILE HANDLEBARS ! */
 .container {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 5rem;
 }
-/* # MEDIA QUERIES # */
 
-/* ? TABLETS ? */
+/* ! MEDIA QUERIES ! */
+
+/* # TABLETS # */
 @media only screen and (max-width: 768px) {
+  /* * Menu & main * */
+  /* Only display the hamburger menu */
   .nav-computer {
     display: none;
   }
+
+  /* Hamburger menu overlay */
   .off-screen-menu,
   .nav-mobile {
     display: inline-block;
   }
-
   .off-screen-menu {
     z-index: 1;
     background-color: var(--hColor);
@@ -429,15 +409,12 @@ textarea {
     font-size: 2rem;
     transition: 0.3s ease;
   }
-
   .off-screen-menu.active {
     left: 0;
   }
-
   .navbar li {
     margin-bottom: 1rem;
   }
-
   .navbar li a {
     color: rgb(255, 255, 255);
     font-size: 1rem;
@@ -446,6 +423,7 @@ textarea {
     color: rgba(255, 255, 255, 0.5);
   }
 
+  /* Hamburger menu icon */
   .ham-menu {
     height: 50px;
     width: 40px;
@@ -454,7 +432,6 @@ textarea {
     cursor: pointer;
     z-index: 2;
   }
-
   .ham-menu span {
     height: 5px;
     width: 100%;
@@ -466,31 +443,27 @@ textarea {
     transform: translate(-50%, -50%);
     transition: 0.3s ease;
   }
-
   .ham-menu #s1 {
     top: 25%;
   }
-
   .ham-menu #s3 {
     top: 75%;
   }
-
   .ham-menu.active #s1 {
     top: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
     background-color: rgb(255, 255, 255);
   }
-
   .ham-menu.active #s2 {
     opacity: 0;
   }
-
   .ham-menu.active #s3 {
     top: 50%;
     transform: translate(-50%, -50%) rotate(-45deg);
     background-color: rgb(255, 255, 255);
   }
 
+  /* * Home and about * */
   .home-container,
   .about-container {
     flex-direction: column;
@@ -504,28 +477,15 @@ textarea {
     margin: 4rem 0 4rem 0;
     border-radius: 20rem 20rem 0rem 0rem;
   }
+
+  /* * Projects * */
   .project-container {
     grid-template-columns: 1fr;
-  }
-  .projDisplay {
-    flex-direction: column;
-    justify-content: center;
-    margin: 5rem 0rem;
-  }
-
-  .project-info {
-    margin-bottom: 2rem;
-  }
-
-  #pid-img {
-    width: 75%;
-    margin-top: 3rem;
   }
   .object {
     width: 100%;
     height: 25rem;
   }
-
   .proj-img {
     width: 100%;
     height: auto;
@@ -536,8 +496,22 @@ textarea {
     margin: 1rem 0rem 7rem 0rem;
   }
 
+  /* * Project * */
+  .projDisplay {
+    flex-direction: column;
+    justify-content: center;
+    margin: 5rem 0rem;
+  }
+  .project-info {
+    margin-bottom: 2rem;
+  }
+  #pid-img {
+    width: 75%;
+    margin-top: 3rem;
+  }
+
   /* * users * */
-  .container-centered {
+  .user-table {
     width: 90%;
     margin-bottom: 5rem;
   }
@@ -549,41 +523,43 @@ textarea {
   }
 }
 
-/* ? PHONES ? */
+/* # PHONES # */
 @media only screen and (max-width: 425px) {
+  /*  * General * */
   h1 {
     font-size: 2.5rem;
     margin-top: 2rem;
   }
-  /* * Main handlebars  and home* */
+
+  /* * Main & home* */
   .homeImg,
   #aboutImg {
     width: 90%;
   }
 
-  /* * About handlebars * */
+  /* * About * */
   .aboutSection {
     width: 90%;
     font-size: 0.9rem;
     text-align: left;
   }
 
-  /* * Projects handlebars * */
+  /* * Project * */
+  /* Only display pid-img & title on projects page (phone) */
+  #stype,
+  #sdesc {
+    display: none;
+  }
   #pid-img {
     width: 90%;
   }
-
   .objectInfo {
     justify-content: unset;
     align-items: unset;
     margin: 1rem 0rem 7rem 0rem;
   }
 
-  #stype,
-  #sdesc {
-    display: none;
-  }
-
+  /* * Contact * */
   #full-name,
   #phone,
   #contactForm #email,
@@ -594,7 +570,6 @@ textarea {
   textarea {
     height: 10rem;
     resize: none;
-    /* width: 40rem; */
     margin: 1rem 0 3rem 0;
     padding: 20px;
     border: 1px solid var(--hColor);
@@ -602,8 +577,8 @@ textarea {
     background: transparent;
     outline: none;
   }
-  /* * Users * */
 
+  /* * Users * */
   .users tr th {
     max-width: 10rem;
     overflow: scroll;

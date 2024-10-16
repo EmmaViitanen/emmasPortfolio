@@ -19,14 +19,16 @@
         {{#if project.ptitle}} value="{{project.ptitle}}"{{/if}}
         />
         <input type="text" name="projyear" class="loginInput" id="projyear" placeholder="Year" {{#if project.pyear}} value="{{project.pyear}}"{{/if}}/>
+        <!-- Dropdown for type -->
         <select type="text" name="projtype" class="loginInput" id="projtype" placeholder="Type">
-          <option value="Choose Type" >Choose Type</option>
+          <option value="Choose Type" disabled selected>Choose Type</option>
           <option value="Illustration" {{#if (eq project.ptype "Illustration")}}selected="selected"{{/if}}>Illustration</option>
           <option value="Photography"{{#if (eq project.ptype "Photography")}}selected="selected"{{/if}}>Photography</option>
           <option value="Programming"{{#if (eq project.ptype "Programming")}}selected="selected"{{/if}}>Programming</option>
         </select>
+        <!-- Dropdown för skills -->
         <select type="text" name="projskill" class="loginInput" id="projskill" required>
-          <option value=""> Required to choose skill</option>
+          <option value="" disabled selected> Required to choose skill</option>
             <option value='HTML'{{#if (eq ../project.skills "HTML")}}selected="selected"{{/if}}> HTML</option>
             <option value='CSS'{{#if (eq ../project.skills "CSS")}}selected="selected"{{/if}}> CSS</option>
             <option value='JavaScript'{{#if (eq ../project.skills "JavaScript")}}selected="selected"{{/if}}> JavaScript</option>
